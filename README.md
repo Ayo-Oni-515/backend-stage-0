@@ -37,7 +37,7 @@ A publicly accesible RESTful API that returns my profile information along with 
 ## API Documentation
 To access online, use endpoint URL:
 
-    https://
+    https://backend-stage-0-production.up.railway.app/me
 
 Typical JSON Response Format (200 OK):
 
@@ -56,5 +56,5 @@ Usage
 
     import requests
 
-    response = requests.get("https://")
+    response = requests.get("https://backend-stage-0-production.up.railway.app/me")
     print(response.json())
