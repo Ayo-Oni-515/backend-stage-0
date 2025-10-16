@@ -13,6 +13,13 @@ app = FastAPI(
     description="stage 0 backend track"
 )
 
+# CORS Management
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["GET"],
+    allow_headers=["*"]
+)
 
 # personal details
 EMAIL = "ayodejioni1505@gmail.com"
