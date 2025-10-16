@@ -1,10 +1,15 @@
 from datetime import datetime, timezone
+import logging
 
 import requests
 from fastapi import FastAPI, HTTPException, status
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
+
+logging.basicConfig(
+    format="%(asctime)s : %(levelname)s - %(message)s",
+    level=logging.DEBUG, filename="out.log")
 
 
 # main application entry point
@@ -35,6 +40,7 @@ async def profile_information():
     profile information alongside a dynamic cat fact.
     """
     try:
+        logging.info("fetching data from cat fact API...")
 
         response = requests.get(
             CAT_FACT_API,
@@ -43,13 +49,16 @@ async def profile_information():
 
         FACT = (response.json())['fact']
 
+        logging.info("Cat fact fetched successfully")
     except requests.exceptions.Timeout:
+        logging.exception("Cat fact API timeout", exc_info=False)
 
         raise HTTPException(
             status_code=status.HTTP_504_GATEWAY_TIMEOUT,
             detail="Cat fact API timed out!"
         )
     except Exception:
+        logging.exception("Cat fact API unresponsive", exc_info=False)
 
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
